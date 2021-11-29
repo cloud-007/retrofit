@@ -16,7 +16,7 @@ const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    private  lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var todoAdapter: TodoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.isVisible = true
             val response = try {
                 RetrofitInstance.api.getTodos()
-            } catch(e: IOException) {
+            } catch (e: IOException) {
                 Log.e(TAG, "IOException, you might not have internet connection")
                 binding.progressBar.isVisible = false
                 return@launchWhenCreated
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.isVisible = false
                 return@launchWhenCreated
             }
-            if(response.isSuccessful && response.body() != null) {
+            if (response.isSuccessful && response.body() != null) {
                 todoAdapter.todos = response.body()!!
             } else {
                 Log.e(TAG, "Response not successful")
