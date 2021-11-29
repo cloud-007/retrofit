@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofit.databinding.ItemTodoBinding
 
-class TodoAdapter : RecyclerView.Adapter< TodoAdapter.TodoViewHolder >(){
-    inner class TodoViewHolder(val binding: ItemTodoBinding): RecyclerView.ViewHolder(binding.root)
+class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Todo>(){
-        override fun areItemsTheSame(oldItem: Todo,  newItem: Todo): Boolean{
+    inner class TodoViewHolder(val binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root)
+
+    private val diffCallback = object : DiffUtil.ItemCallback<Todo>() {
+        override fun areItemsTheSame(oldItem: Todo, newItem: Todo): Boolean {
             return oldItem.id == newItem.id
         }
 
@@ -23,9 +24,10 @@ class TodoAdapter : RecyclerView.Adapter< TodoAdapter.TodoViewHolder >(){
 
     private val differ = AsyncListDiffer(this, diffCallback)
     var todos: List<Todo>
-    get() = differ.currentList
-    set(value) {differ.submitList(value)}
+        get() = differ.currentList
+        set(value) { differ.submitList(value) }
 
+    override fun getItemCount() = todos.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         return TodoViewHolder(ItemTodoBinding.inflate(
@@ -41,9 +43,5 @@ class TodoAdapter : RecyclerView.Adapter< TodoAdapter.TodoViewHolder >(){
             tvTitle.text = todo.title
             cvDone.isChecked = todo.completed
         }
-    }
-
-    override fun getItemCount(): Int {
-        return todos.size
     }
 }
